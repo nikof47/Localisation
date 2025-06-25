@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Localisation</title>
+</head>
+<body>
+  <h3>Un instant, on vous localise...</h3>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      fetch('https://hook.integromat.com/TON_WEBHOOK_ID', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          latitude: lat,
+          longitude: lon,
+          phone: 'NUM_UTILISATEUR' // tu peux personnaliser si tu as le numéro
+        })
+      });
+      document.body.innerHTML = "<p>Merci ! Votre position a été envoyée 👍</p>";
+    }, function(error) {
+      document.body.innerHTML = "<p>Erreur : veuillez activer la géolocalisation 📍</p>";
+    });
+  </script>
+</body>
+</html>
